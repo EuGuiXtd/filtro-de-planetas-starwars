@@ -2,8 +2,7 @@ import React, { useContext } from 'react';
 import Contexto from '../context/Appcontext';
 
 function Table() {
-  // eslint-disable-next-line no-unused-vars
-  const { PegaAPI, planets } = useContext(Contexto);
+  const { planets } = useContext(Contexto);
   return (
     <table border="1">
       <thead>
