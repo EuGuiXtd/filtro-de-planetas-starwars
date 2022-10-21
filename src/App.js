@@ -1,7 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import './App.css';
+import Filtro from './components/Filtro';
 import Table from './components/Tabela';
 import Contexto from './context/Appcontext';
+import FiltroNumerico from './components/FiltroNumerico';
 
 function App() {
   const { PegaAPI } = useContext(Contexto);
@@ -9,7 +11,11 @@ function App() {
     PegaAPI();
   });
   return (
-    <Table />
+    <>
+      <Table />
+      <Filtro />
+      <FiltroNumerico />
+    </>
 
   );
 }
