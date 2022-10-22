@@ -1,20 +1,22 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './App.css';
 import Filtro from './components/Filtro';
 import Table from './components/Tabela';
 import Contexto from './context/Appcontext';
-import FiltroNumerico from './components/FiltroNumerico';
 
 function App() {
   const { PegaAPI } = useContext(Contexto);
+  const [leu, setLeu] = useState(false);
   useEffect(() => {
-    PegaAPI();
-  });
+    if (!leu) {
+      PegaAPI();
+      setLeu(true);
+    }
+  }, [PegaAPI, leu, setLeu]);
   return (
     <>
       <Table />
       <Filtro />
-      <FiltroNumerico />
     </>
 
   );

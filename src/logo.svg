@@ -6,3 +6,88 @@
     </g>
 </svg>
 
+   <div>
+        {planetas.map((x) => {
+          console.log(x);
+          return (<p key={ x.name }>
+            {x.name}
+            {' '}
+            ##
+            {' '}
+            {x.rotation_period}
+            {' '}
+            ##
+          </p>);
+        })}
+      </div>
+      <button type="button" onClick={ () => { settest({ abacaxi: 60 }); } }>
+        entrar
+      </button>
+      <button type="button" onClick={ () => { PegaAPI({ }); } }>
+        API
+      </button>
+
+
+         <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Rotation Period</th>
+          <th>Orbital Period</th>
+          <th>Diameter</th>
+          <th>Climate</th>
+          <th>Gravity</th>
+          <th>Terrain</th>
+          <th>Surface Water</th>
+          <th>Population</th>
+          <th>Films</th>
+          <th>Created</th>
+          <th>Edited</th>
+          <th>URL</th>
+        </tr>
+      </thead>
+      ----------------------------------------------------------------------------
+      import React, { useState } from 'react';
+
+function FiltroNumerico() {
+  const [collumnFilter, setColumnFilter] = useState('population');
+  const [comparisonFilter, setComparisonFilter] = useState('maior que');
+  const [valueFilter, setValueFilter] = useState();
+  const [test, setTest] = useState();
+  return (
+    <>
+      <select
+        data-testid="column-filter"
+        onChange={ (e) => setColumnFilter(e.target.value) }
+      >
+        <option value="pop">population </option>
+        <option value="orb" selected>orbital period </option>
+        <option value="rot">rotation period </option>
+        <option value="sur">surface water </option>
+      </select>
+      <select
+        data-testid="comparison-filter"
+        onChange={ (e) => setComparisonFilter(e.target.value) }
+      >
+        <option value=">">maior que </option>
+        <option value="<" selected>menor que </option>
+        <option value="=">igual a </option>
+      </select>
+      <input
+        data-testid="value-filter"
+        placeholder="valor imaginado"
+        type="number"
+        onChange={ (e) => setValueFilter(e.target.value) }
+      />
+      <button
+        data-testid="button-filter"
+        type="button"
+      >
+        Filtrar
+
+      </button>
+    </>
+  );
+}
+
+export default FiltroNumerico;
