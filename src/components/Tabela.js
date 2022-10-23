@@ -16,6 +16,17 @@ function Table() {
   const [collumnFilter, setColumnFilter] = useState('population');
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState(0);
+  function removeFiltro(filter) {
+    const idx = filtrosUsados.findIndex((x) => x === filter);
+    const newFiltroUsados = Array.from(filtrosUsados);
+    newFiltroUsados.splice(idx, 1);
+    setFiltrosUsados(newFiltroUsados);
+    const id = filtros.findIndex((x) => x.collumnFilter === filter);
+    const newFiltros = Array.from(filtros);
+    newFiltros.splice(id, 1);
+    setFiltros(newFiltros);
+  }
+
   function filtrar(planeta) {
     const resultado = filtros.map((filtroAtual) => {
       const valor = planeta[filtroAtual.collumnFilter];
@@ -130,8 +141,32 @@ function Table() {
 
       </button>
       <div>
-        {filtros.map((f) => f.collumnFilter)}
+        {filtros.map((f) => (
+          <p
+            data-testid="filter"
+            key={ f.collumnFilter }
+          >
+            {f.collumnFilter}
+            <button
+              type="button"
+              onClick={ () => removeFiltro(f.collumnFilter) }
+            >
+              x
+            </button>
+          </p>
+        ))}
       </div>
+      <button
+        data-testid="button-remove-filters"
+        onClick={ () => {
+          setFiltrosUsados([]);
+          setFiltros([]);
+        } }
+        type="button"
+      >
+        removetudo
+
+      </button>
     </>
   );
 }
