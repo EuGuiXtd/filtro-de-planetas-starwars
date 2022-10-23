@@ -1,26 +1,49 @@
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Contexto from '../context/Appcontext';
 
 function Table() {
   const { planets, filterPlanets } = useContext(Contexto);
+  const coluna = [
+    'population',
+    'orbital_period',
+    'rotation_period',
+    'surface_water',
+    'diameter',
+  ];
+
+  const [filtros, setFiltros] = useState([]);
+  const [filtrosUsados, setFiltrosUsados] = useState([]);
   const [collumnFilter, setColumnFilter] = useState('population');
   const [comparisonFilter, setComparisonFilter] = useState('maior que');
   const [valueFilter, setValueFilter] = useState(0);
-  const [filtros, setFiltros] = useState([]);
   function filtrar(planeta) {
     const resultado = filtros.map((filtroAtual) => {
       const valor = planeta[filtroAtual.collumnFilter];
-      return ((Number(valor) > Number(filtroAtual.valueFilter) && filtroAtual.comparisonFilter === 'maior que')
-           || (Number(valor) < Number(filtroAtual.valueFilter) && filtroAtual.comparisonFilter === 'menor que')
-           || (Number(valor) === Number(filtroAtual.valueFilter) && filtroAtual.comparisonFilter === 'igual a'));
+      return ((Number(valor)
+      > Number(filtroAtual.valueFilter)
+      && filtroAtual.comparisonFilter === 'maior que')
+           || (Number(valor)
+           < Number(filtroAtual.valueFilter)
+           && filtroAtual.comparisonFilter === 'menor que')
+           || (Number(valor)
+           === Number(filtroAtual.valueFilter)
+           && filtroAtual.comparisonFilter === 'igual a'));
     });
     let resuladoFInal = true;
     resultado.forEach((r) => { if (!r) { resuladoFInal = false; } });
-    console.log(resultado);
     return resuladoFInal;
   }
+  useEffect(() => {
+    const col = [
+      'population',
+      'orbital_period',
+      'rotation_period',
+      'surface_water',
+      'diameter',
+    ];
+
+    setColumnFilter(col.filter((c) => !filtrosUsados.includes(c))[0]);
+  }, [filtrosUsados]);
   return (
     <>
       <table border="1">
@@ -42,7 +65,6 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {console.log(filtros)}
           {planets.filter((planeta) => planeta.name.toLowerCase()
             .includes(filterPlanets.toLowerCase())
             && (filtros === []
@@ -70,11 +92,8 @@ function Table() {
         data-testid="column-filter"
         onChange={ (e) => setColumnFilter(e.target.value) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
-        <option value="diameter">diameter</option>
+        {coluna.filter((y) => (!filtrosUsados.includes(y)))
+          .map((x) => (<option key={ x } value={ x }>{x}</option>))}
       </select>
       <select
         data-testid="comparison-filter"
@@ -102,6 +121,9 @@ function Table() {
             valueFilter,
           });
           setFiltros(novoFiltros);
+          const newFiltroUsados = Array.from(filtrosUsados);
+          newFiltroUsados.push(collumnFilter);
+          setFiltrosUsados(newFiltroUsados);
         } }
       >
         Filtrar
