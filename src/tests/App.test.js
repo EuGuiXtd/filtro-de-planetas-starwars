@@ -1,7 +1,5 @@
 import React from 'react';
-import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import RenderWithProvider from './RenderWIthProvider';
 import RenderWithMockProvider from './RenderWIthMockProvider';
 import App from '../App';

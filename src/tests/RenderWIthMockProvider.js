@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 import Contexto from '../context/Appcontext';
 
 function Provedor({ children }) {
